@@ -1,6 +1,8 @@
 package kr.ac.kopo.minju_backend.dto;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,12 +13,11 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-
     private String id;
-    private String name;
+    private String member_id;
+    private String password;
     private String email;
-    private String pw;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birth;
-    private char gender;
+    private String name;
+    private String birth;
+    private String gender;
 }

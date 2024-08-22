@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 
     // 아이디와 비밀번호로 사용자 검색 (로그인용)
-    Optional<User> findUserByIdAndPw(String id, String password);
+    Optional<User> findUserByIdAndPassword(String id, String password);
 
     // 아이디로 회원 탈퇴
     Optional<User> deleteUserById (String id);

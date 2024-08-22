@@ -7,7 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupDTO {
-    private String groupCode;
-    private String groupName;
-    private String ownerId;
+    private String id;
+    private String group_item;
 }

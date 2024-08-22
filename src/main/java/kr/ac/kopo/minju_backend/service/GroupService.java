@@ -26,21 +26,19 @@ public interface GroupService {
 
     List<Group> findAllGroup();
 
-    Optional<Group> findByGroupCode(String groupCode);
+    Optional<Group> findById(String id);
 
     default Group dtoToEntity(GroupDTO dto){
         return Group.builder()
-                .groupCode(dto.getGroupCode())
-                .groupName(dto.getGroupName())
-                .ownerId(dto.getOwnerId())
+                .id(dto.getId())
+                .group_item(dto.getGroup_item())
                 .build();
     }
 
     default GroupDTO entityToDto(Group entity){
         return GroupDTO.builder()
-                .groupCode(entity.getGroupCode())
-                .groupName(entity.getGroupName())
-                .ownerId(entity.getOwnerId())
+                .id(entity.getId())
+                .group_item(entity.getGroup_item())
                 .build();
     }
 }

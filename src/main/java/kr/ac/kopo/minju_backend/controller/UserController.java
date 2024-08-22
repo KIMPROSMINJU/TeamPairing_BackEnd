@@ -53,7 +53,7 @@ public class UserController {
         if (user.isPresent()) {
             User existingUser = user.get();
             existingUser.setEmail(userDetails.getEmail());
-            existingUser.setPw(userDetails.getPw());
+            existingUser.setPassword(userDetails.getPassword());
             existingUser.setBirth(userDetails.getBirth());
             existingUser.setGender(userDetails.getGender());
             User updatedUser = userService.saveUser(existingUser);

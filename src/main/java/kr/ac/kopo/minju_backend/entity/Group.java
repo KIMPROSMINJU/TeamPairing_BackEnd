@@ -14,31 +14,8 @@ import java.sql.Date;
 public class Group {
     @Id
     @Column
-    private String groupCode;
+    private String id;
 
     @Column
-    private String groupName;
-
-    @Column
-    private String ownerId;
-
-    public String getGroupCode(){
-        return groupCode;
-    }
-
-    public void setGroupCode(String groupCode){
-        this.groupCode = groupCode;
-    }
-
-    public String getGroupName(){
-        return groupCode;
-    }
-
-    public void setGroupName(String groupName){
-        this.groupName = groupName;
-    }
-
-    public String getOwnerId(){
-        return ownerId;
-    }
+    private String group_item;
 }

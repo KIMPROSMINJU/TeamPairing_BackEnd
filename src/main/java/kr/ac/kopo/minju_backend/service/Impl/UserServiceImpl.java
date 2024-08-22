@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> loginUser(UserDTO dto) {
-        return userRepository.findUserByIdAndPw(dto.getName(), dto.getPw());
+        return userRepository.findUserByIdAndPassword(dto.getName(), dto.getPassword());
     }
 
     @Override
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findUserById(dto.getId());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            user.setPw(dto.getPw());
+            user.setPassword(dto.getPassword());
             userRepository.save(user);
             return Optional.of(user);
         }

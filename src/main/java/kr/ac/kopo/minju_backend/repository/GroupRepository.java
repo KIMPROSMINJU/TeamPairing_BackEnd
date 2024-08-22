@@ -9,8 +9,8 @@ import java.util.Optional;
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
     // 그룹코드로 그룹 검색
-    Optional<Group> findByGroupCode(String groupCode);
+    Optional<Group> findById(String id);
 
     // 그룹코드로 그룹 삭제
-    Optional<Group> deleteByGroupCode(String groupCode);
+    Optional<Group> deleteById(String id);
 }

@@ -20,75 +20,76 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
+    // 일정 검색 기능 - 찾고자 하는 일정이 데이터베이스에 존재할 경우 해당 일정을 반환하고 존재하지 않을 경우 null값 반환
     @GetMapping("/findby_schid/{schId}")
-    public ResponseEntity<ScheduleDTO> getScheduleBySchId(@PathVariable int schId) {
+    public ScheduleDTO getScheduleBySchId(@PathVariable int schId) {
         Optional<Schedule> schedule = scheduleService.findScheduleBySchId(schId);
         if (schedule.isPresent()){
             ScheduleDTO scheduleDTO = scheduleService.entityToDto(schedule.get());
-            return ResponseEntity.ok(scheduleDTO);
+            return scheduleDTO;
         } else {
-            return ResponseEntity.notFound().build();
+            return null;
         }
     }
 
     @GetMapping("/findby_startdate/{startDate}")
-    public ResponseEntity<ScheduleDTO> getScheduleByStartDate(@PathVariable Date startDate) {
+    public ScheduleDTO getScheduleByStartDate(@PathVariable Date startDate) {
         Optional<Schedule> schedule = scheduleService.findScheduleByStartDate(startDate);
         if (schedule.isPresent()){
             ScheduleDTO scheduleDTO = scheduleService.entityToDto(schedule.get());
-            return ResponseEntity.ok(scheduleDTO);
+            return scheduleDTO;
         } else {
-            return ResponseEntity.notFound().build();
+            return null;
         }
     }
 
     @GetMapping("/findby_title/{title}")
-    public ResponseEntity<ScheduleDTO> getScheduleByTitle(@PathVariable String title) {
+    public ScheduleDTO getScheduleByTitle(@PathVariable String title) {
         Optional<Schedule> schedule = scheduleService.findScheduleByTitle(title);
         if (schedule.isPresent()){
             ScheduleDTO scheduleDTO = scheduleService.entityToDto(schedule.get());
-            return ResponseEntity.ok(scheduleDTO);
+            return scheduleDTO;
         } else {
-            return ResponseEntity.notFound().build();
+            return null;
         }
     }
 
     @GetMapping("/findby_kind/{kind}")
-    public ResponseEntity<ScheduleDTO> getScheduleByKind(@PathVariable String kind) {
+    public ScheduleDTO getScheduleByKind(@PathVariable String kind) {
         Optional<Schedule> schedule = scheduleService.findScheduleByKind(kind);
         if (schedule.isPresent()){
             ScheduleDTO scheduleDTO = scheduleService.entityToDto(schedule.get());
-            return ResponseEntity.ok(scheduleDTO);
+            return scheduleDTO;
         } else {
-            return ResponseEntity.notFound().build();
+            return null;
         }
     }
 
+    // 일정 등록 기능 - 생성된 일정 반환
     @PostMapping("/register")
-    public ResponseEntity<ScheduleDTO> createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
+    public ScheduleDTO createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
         Schedule schedule = scheduleService.registerSchedule(scheduleDTO);
         ScheduleDTO createdSchedule = scheduleService.entityToDto(schedule);
-        return ResponseEntity.ok(createdSchedule);
+        return createdSchedule;
     }
 
+    // 일정 수정 기능 - 수정된 일정 반환, 수정된 일정이 존재하지 않을 경우 null값 반환
     @PutMapping("/update")
-    public ResponseEntity<ScheduleDTO> updateSchedule(@RequestBody ScheduleDTO scheduleDetails) {
+    public ScheduleDTO updateSchedule(@RequestBody ScheduleDTO scheduleDetails) {
         Optional<Schedule> updatedSchedule = scheduleService.updateSchedule(scheduleDetails);
         if (updatedSchedule.isPresent()) {
             ScheduleDTO updatedScheduleDTO = scheduleService.entityToDto(updatedSchedule.get());
-            return ResponseEntity.ok(updatedScheduleDTO);
+            return updatedScheduleDTO;
         } else {
-            return ResponseEntity.notFound().build();
+            return null;
         }
     }
 
+    // 일정 삭제 기능 - 반환값 없음
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteSchedule(@RequestBody ScheduleDTO scheduleDTO) {
+    public void deleteSchedule(@RequestBody ScheduleDTO scheduleDTO) {
         if (scheduleService.findScheduleBySchId(scheduleDTO.getSchId()).isPresent()) {
             scheduleService.deleteSchedule(scheduleDTO);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
         }
     }
 }

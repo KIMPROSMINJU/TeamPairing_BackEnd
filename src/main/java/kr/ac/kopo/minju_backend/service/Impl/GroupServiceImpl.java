@@ -27,7 +27,7 @@ public class GroupServiceImpl implements GroupService {
 
     // 그룹 참여
     public Optional<Group> joinGroup(GroupDTO dto, GroupUserDTO userDTO){
-        Optional<Group> optionalGroup = groupRepository.findByGroupCode(dto.getGroupCode());
+        Optional<Group> optionalGroup = groupRepository.findById(dto.getId());
         if (optionalGroup.isPresent()) {
             GroupUserDTO groupUserDTO = GroupUserDTO.builder()
                     .groupCode(userDTO.getGroupCode())
@@ -40,7 +40,7 @@ public class GroupServiceImpl implements GroupService {
 
     // 그룹 탈퇴
     public Optional<Group> leaveGroup(GroupDTO dto, GroupUserDTO userDTO) {
-        Optional<Group> optionalGroup = groupRepository.findByGroupCode(dto.getGroupCode());
+        Optional<Group> optionalGroup = groupRepository.findById(dto.getId());
         if (optionalGroup.isPresent()) {
             groupUserService.leaveGroup(userDTO.getGroupCode(), userDTO.getMemberId());
         }
@@ -49,10 +49,10 @@ public class GroupServiceImpl implements GroupService {
 
     // 그룹 수정
     public Optional<Group> updateGroup(GroupDTO dto) {
-        Optional<Group> optionalGroup = groupRepository.findByGroupCode(dto.getGroupCode());
+        Optional<Group> optionalGroup = groupRepository.findById(dto.getId());
         if (optionalGroup.isPresent()) {
             Group group = optionalGroup.get();
-            group.setGroupName(dto.getGroupName());
+            group.setGroup_item(dto.getGroup_item());
             groupRepository.save(group);
             return Optional.of(group);
         } else {
@@ -62,14 +62,14 @@ public class GroupServiceImpl implements GroupService {
 
     // 그룹 삭제
     public void deleteGroup(GroupDTO dto){
-        groupRepository.deleteByGroupCode(dto.getGroupCode());
+        groupRepository.deleteById(dto.getId());
     };
 
     public List<Group> findAllGroup(){
         return groupRepository.findAll();
     };
 
-    public Optional<Group> findByGroupCode(String groupCode){
-        return groupRepository.findByGroupCode(groupCode);
+    public Optional<Group> findById(String id){
+        return groupRepository.findById(id);
     }
 }

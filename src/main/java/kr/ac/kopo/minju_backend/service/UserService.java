@@ -44,9 +44,10 @@ public interface UserService {
     default User dtoToEntity(UserDTO dto){
         return User.builder()
                 .id(dto.getId())
-                .name(dto.getName())
+                .member_id(dto.getMember_id())
+                .password(dto.getPassword())
                 .email(dto.getEmail())
-                .pw(dto.getPw())
+                .name(dto.getName())
                 .birth(dto.getBirth())
                 .gender(dto.getGender())
                 .build();
@@ -56,9 +57,10 @@ public interface UserService {
     default UserDTO entityToDto(User entity){
         return UserDTO.builder()
                 .id(entity.getId())
-                .name(entity.getName())
+                .member_id(entity.getMember_id())
+                .password(entity.getPassword())
                 .email(entity.getEmail())
-                .pw(entity.getPw())
+                .name(entity.getName())
                 .birth(entity.getBirth())
                 .gender(entity.getGender())
                 .build();

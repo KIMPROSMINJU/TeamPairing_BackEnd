@@ -29,9 +29,9 @@ public class GroupController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/findby_groupcode/{groupCode}")
-    public ResponseEntity<GroupDTO> getGroupByGroupCode(@PathVariable String groupCode){
-        Optional<Group> group = groupService.findByGroupCode(groupCode);
+    @GetMapping("/findby_groupcode/{id}")
+    public ResponseEntity<GroupDTO> getGroupByGroupCode(@PathVariable String id){
+        Optional<Group> group = groupService.findById(id);
         if (group.isPresent()){
             GroupDTO groupDTO = groupService.entityToDto(group.get());
             return ResponseEntity.ok(groupDTO);
@@ -53,8 +53,8 @@ public class GroupController {
         if (optionalGroup.isPresent()) {
             Group group = optionalGroup.get();
             GroupDTO responseDTO = GroupDTO.builder()
-                    .groupCode(group.getGroupCode())
-                    .groupName(group.getGroupName())
+                    .id(group.getId())
+                    .group_item(group.getGroup_item())
                     .build();
             return ResponseEntity.ok(responseDTO);
         } else {
@@ -68,8 +68,8 @@ public class GroupController {
         if (optionalGroup.isPresent()) {
             Group group = optionalGroup.get();
             GroupDTO responseDTO = GroupDTO.builder()
-                    .groupCode(group.getGroupCode())
-                    .groupName(group.getGroupName())
+                    .id(group.getId())
+                    .group_item(group.getGroup_item())
                     .build();
             return ResponseEntity.ok(responseDTO);
         } else {
@@ -77,8 +77,8 @@ public class GroupController {
         }
     }
 
-    @PutMapping("/update/{groupCode}")
-    public ResponseEntity<GroupDTO> updateGroup(@PathVariable String groupCode, @RequestBody GroupDTO groupDetails) {
+    @PutMapping("/update/{id}")
+    public ResponseEntity<GroupDTO> updateGroup(@RequestBody GroupDTO groupDetails) {
         Optional<Group> updatedGroup = groupService.updateGroup(groupDetails);
         if (updatedGroup.isPresent()) {
             GroupDTO updatedGroupDTO = groupService.entityToDto(updatedGroup.get());
@@ -90,7 +90,7 @@ public class GroupController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteGroup(@RequestBody GroupDTO groupDTO){
-        if (groupService.findByGroupCode(groupDTO.getGroupCode()).isPresent()){
+        if (groupService.findById(groupDTO.getId()).isPresent()){
             groupService.deleteGroup(groupDTO);
             return ResponseEntity.noContent().build();
         } else {
