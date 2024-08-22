@@ -27,21 +27,22 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     // 스케줄 삭제
     public void deleteSchedule(ScheduleDTO dto) {
-        scheduleRepository.deleteScheduleBySchId(dto.getSchId());
+        scheduleRepository.deleteScheduleById(dto.getId());
     };
 
     // 스케줄 수정
     public Optional<Schedule> updateSchedule(ScheduleDTO dto) {
-        Optional<Schedule> optionalSchedule = scheduleRepository.findScheduleBySchId(dto.getSchId());
+        Optional<Schedule> optionalSchedule = scheduleRepository.findScheduleById(dto.getId());
         if (optionalSchedule.isPresent()) {
             Schedule schedule = optionalSchedule.get();
-            schedule.setTitle(dto.getTitle());
-            schedule.setContent(dto.getContent());
+            schedule.setId(dto.getId());
+            schedule.setName(dto.getName());
+            schedule.setDetails(dto.getDetails());
+            schedule.setColor(dto.getColor());
             schedule.setKind(dto.getKind());
-            schedule.setNotice(dto.getNotice());
-            schedule.setRepeats(dto.getRepeats());
-            schedule.setStartDate(dto.getStartDate());
-            schedule.setEndDate(dto.getEndDate());
+            schedule.setStart(dto.getStart());
+            schedule.setEnd(dto.getEnd());
+            schedule.setTimed(dto.getTimed());
             scheduleRepository.save(schedule);
             return Optional.of(schedule);
         } else {
@@ -49,14 +50,14 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
     };
 
-    public Optional<Schedule> findScheduleBySchId(int schId){
-        return scheduleRepository.findScheduleBySchId(schId);
+    public Optional<Schedule> findScheduleById(String id){
+        return scheduleRepository.findScheduleById(id);
     };
-    public Optional<Schedule> findScheduleByStartDate(Date startDate){
-        return scheduleRepository.findScheduleByStartDate(startDate);
+    public Optional<Schedule> findScheduleByStart(Date start){
+        return scheduleRepository.findScheduleByStart(start);
     };
-    public Optional<Schedule> findScheduleByTitle(String title){
-        return scheduleRepository.findScheduleByTitle(title);
+    public Optional<Schedule> findScheduleByName(String name){
+        return scheduleRepository.findScheduleByName(name);
     };
     public Optional<Schedule> findScheduleByKind(String kind){
         return scheduleRepository.findScheduleByKind(kind);

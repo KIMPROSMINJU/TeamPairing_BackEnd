@@ -1,5 +1,7 @@
 package kr.ac.kopo.minju_backend.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import lombok.*;
 
 import java.sql.Date;
@@ -9,13 +11,16 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ScheduleDTO {
-    private int schId;
-    private String userId;
-    private Date startDate;
-    private Date endDate;
-    private String title;
-    private String content;
-    private int repeats;
-    private int notice;
+    private String id;
+    private String name;
+    private String details;
+    private String color;
     private String kind;
+    private Date start;
+    private Date end;
+    private boolean timed;
+
+    public boolean getTimed() {
+        return timed;
+    }
 }

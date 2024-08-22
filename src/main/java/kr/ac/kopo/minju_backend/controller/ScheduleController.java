@@ -21,9 +21,9 @@ public class ScheduleController {
     }
 
     // 일정 검색 기능 - 찾고자 하는 일정이 데이터베이스에 존재할 경우 해당 일정을 반환하고 존재하지 않을 경우 null값 반환
-    @GetMapping("/findby_schid/{schId}")
-    public ScheduleDTO getScheduleBySchId(@PathVariable int schId) {
-        Optional<Schedule> schedule = scheduleService.findScheduleBySchId(schId);
+    @GetMapping("/findby_schid/{id}")
+    public ScheduleDTO getScheduleById(@PathVariable String id) {
+        Optional<Schedule> schedule = scheduleService.findScheduleById(id);
         if (schedule.isPresent()){
             ScheduleDTO scheduleDTO = scheduleService.entityToDto(schedule.get());
             return scheduleDTO;
@@ -32,9 +32,9 @@ public class ScheduleController {
         }
     }
 
-    @GetMapping("/findby_startdate/{startDate}")
-    public ScheduleDTO getScheduleByStartDate(@PathVariable Date startDate) {
-        Optional<Schedule> schedule = scheduleService.findScheduleByStartDate(startDate);
+    @GetMapping("/findby_startdate/{start}")
+    public ScheduleDTO getScheduleByStart(@PathVariable Date start) {
+        Optional<Schedule> schedule = scheduleService.findScheduleByStart(start);
         if (schedule.isPresent()){
             ScheduleDTO scheduleDTO = scheduleService.entityToDto(schedule.get());
             return scheduleDTO;
@@ -43,9 +43,9 @@ public class ScheduleController {
         }
     }
 
-    @GetMapping("/findby_title/{title}")
-    public ScheduleDTO getScheduleByTitle(@PathVariable String title) {
-        Optional<Schedule> schedule = scheduleService.findScheduleByTitle(title);
+    @GetMapping("/findby_title/{name}")
+    public ScheduleDTO getScheduleByName(@PathVariable String name) {
+        Optional<Schedule> schedule = scheduleService.findScheduleByName(name);
         if (schedule.isPresent()){
             ScheduleDTO scheduleDTO = scheduleService.entityToDto(schedule.get());
             return scheduleDTO;
@@ -88,7 +88,7 @@ public class ScheduleController {
     // 일정 삭제 기능 - 반환값 없음
     @DeleteMapping("/delete")
     public void deleteSchedule(@RequestBody ScheduleDTO scheduleDTO) {
-        if (scheduleService.findScheduleBySchId(scheduleDTO.getSchId()).isPresent()) {
+        if (scheduleService.findScheduleById(scheduleDTO.getId()).isPresent()) {
             scheduleService.deleteSchedule(scheduleDTO);
         }
     }

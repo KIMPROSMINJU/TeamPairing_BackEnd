@@ -14,29 +14,30 @@ import java.sql.Date;
 public class Schedule {
     @Id
     @Column
-    private int schId;
+    private String id;
 
     @Column
-    private String userId;
-
+    private String name;
+    
     @Column
-    private Date startDate;
-
+    private String details;
+    
     @Column
-    private Date endDate;
-
-    @Column
-    private String title;
-
-    @Column
-    private String content;
-
-    @Column
-    private int repeats;
-
-    @Column
-    private int notice;
+    private String color;
 
     @Column
     private String kind;
+    
+    @Column
+    private Date start;
+    
+    @Column
+    private Date end;
+
+    @Column
+    private boolean timed;
+
+    public boolean getTimed() {
+        return timed;
+    }
 }

@@ -16,36 +16,34 @@ public interface ScheduleService {
     // 스케줄 수정
     Optional<Schedule> updateSchedule(ScheduleDTO dto);
 
-    Optional<Schedule> findScheduleBySchId(int schId);
-    Optional<Schedule> findScheduleByStartDate(Date startDate);
-    Optional<Schedule> findScheduleByTitle(String title);
+    Optional<Schedule> findScheduleById(String id);
+    Optional<Schedule> findScheduleByStart(Date start);
+    Optional<Schedule> findScheduleByName(String name);
     Optional<Schedule> findScheduleByKind(String kind);
 
     default Schedule dtoToEntity(ScheduleDTO dto) {
         return Schedule.builder()
-                .schId(dto.getSchId())
-                .userId(dto.getUserId())
-                .startDate(dto.getStartDate())
-                .endDate(dto.getEndDate())
-                .title(dto.getTitle())
-                .content(dto.getContent())
-                .repeats(dto.getRepeats())
-                .notice(dto.getNotice())
+                .id(dto.getId())
+                .name(dto.getName())
+                .details(dto.getDetails())
+                .color(dto.getColor())
                 .kind(dto.getKind())
+                .start(dto.getStart())
+                .end(dto.getEnd())
+                .timed(dto.getTimed())
                 .build();
     }
 
     default ScheduleDTO entityToDto(Schedule entity) {
         return ScheduleDTO.builder()
-                .schId(entity.getSchId())
-                .userId(entity.getUserId())
-                .startDate(entity.getStartDate())
-                .endDate(entity.getEndDate())
-                .title(entity.getTitle())
-                .content(entity.getContent())
-                .repeats(entity.getRepeats())
-                .notice(entity.getNotice())
+                .id(entity.getId())
+                .name(entity.getName())
+                .details(entity.getDetails())
+                .color(entity.getColor())
                 .kind(entity.getKind())
+                .start(entity.getStart())
+                .end(entity.getEnd())
+                .timed(entity.getTimed())
                 .build();
     }
 }
