@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/schdeule")
@@ -20,8 +22,15 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
+//    @GetMapping("/findAll")
+//    public List<ScheduleDTO> getAllGroups(){
+//        return scheduleService.findAll().stream()
+//                .map(scheduleService::entityToDto)
+//                .collect(Collectors.toList());
+//    }
+
     // 일정 검색 기능 - 찾고자 하는 일정이 데이터베이스에 존재할 경우 해당 일정을 반환하고 존재하지 않을 경우 null값 반환
-    @GetMapping("/findby_schid/{id}")
+    @GetMapping("/findby_id/{id}")
     public ScheduleDTO getScheduleById(@PathVariable String id) {
         Optional<Schedule> schedule = scheduleService.findScheduleById(id);
         if (schedule.isPresent()){
@@ -32,7 +41,7 @@ public class ScheduleController {
         }
     }
 
-    @GetMapping("/findby_startdate/{start}")
+    @GetMapping("/findby_start/{start}")
     public ScheduleDTO getScheduleByStart(@PathVariable Date start) {
         Optional<Schedule> schedule = scheduleService.findScheduleByStart(start);
         if (schedule.isPresent()){
@@ -43,7 +52,7 @@ public class ScheduleController {
         }
     }
 
-    @GetMapping("/findby_title/{name}")
+    @GetMapping("/findby_name/{name}")
     public ScheduleDTO getScheduleByName(@PathVariable String name) {
         Optional<Schedule> schedule = scheduleService.findScheduleByName(name);
         if (schedule.isPresent()){

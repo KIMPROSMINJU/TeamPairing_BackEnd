@@ -22,7 +22,7 @@ public class GroupController {
         this.groupService = groupService;
     }
 
-    @GetMapping("findAll")
+    @GetMapping("/findAll")
     public List<GroupDTO> getAllGroups(){
         return groupService.findAllGroup().stream()
                 .map(groupService::entityToDto)
