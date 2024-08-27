@@ -6,6 +6,8 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -22,7 +24,10 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
     private final RedisUtil redisUtil;
-    private static final String senderEmail = "${spring.mail.username}";
+    private final TemplateEngine templateEngine;
+
+    @Value("${spring.mail.username}")
+    private String senderEmail;
 
     public String createCode() {
         int leftLimit = 48; // number '0'
@@ -31,7 +36,7 @@ public class EmailServiceImpl implements EmailService {
         Random random = new Random();
 
         return random.ints(leftLimit, rightLimit + 1)
-                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 | i >= 97))
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
@@ -40,18 +45,7 @@ public class EmailServiceImpl implements EmailService {
     // 이메일 내용 초기화
     public String setContext(String code) {
         Context context = new Context();
-        TemplateEngine templateEngine = new TemplateEngine();
-        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-
         context.setVariable("code", code);
-
-        templateResolver.setPrefix("templates/");
-        templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode(TemplateMode.HTML);
-        templateResolver.setCacheable(false);
-
-        templateEngine.setTemplateResolver(templateResolver);
-
         return templateEngine.process("mail", context);
     }
 
@@ -85,7 +79,7 @@ public class EmailServiceImpl implements EmailService {
     // 코드 검증
     public Boolean verifyEmailCode(String email, String code) {
         String codeFoundByEmail = redisUtil.getData(email);
-        log.info("code found by email: " + codeFoundByEmail);
+        log.info("code found by email: {}", codeFoundByEmail);
         if (codeFoundByEmail == null) {
             return false;
         }

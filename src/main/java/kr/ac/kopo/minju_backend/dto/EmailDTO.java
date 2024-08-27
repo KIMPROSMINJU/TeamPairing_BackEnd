@@ -6,8 +6,4 @@ import lombok.Data;
 public class EmailDTO {
     private String mail;
     private String verifyCode;
-
-    public String getMail() {
-        return mail;
-    }
 }
