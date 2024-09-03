@@ -49,10 +49,19 @@ public class EmailServiceImpl implements EmailService {
         return templateEngine.process("mail", context);
     }
 
-    // 이메일 폼 생성
     public MimeMessage createEmailForm(String email) throws MessagingException {
-        String authCode = createCode();
+        return null;
+    }
 
+    // 코드 생성
+    public String makeCode(){
+        String authCode = createCode();
+        return authCode;
+    }
+
+
+    // 이메일 폼 생성
+    public MimeMessage createEmailForm(String authCode, String email) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
         message.addRecipients(MimeMessage.RecipientType.TO, email);
         message.setSubject("안녕하세요. 인증번호입니다.");

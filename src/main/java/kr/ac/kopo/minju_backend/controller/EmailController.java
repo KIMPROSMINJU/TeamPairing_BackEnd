@@ -47,4 +47,11 @@ public class EmailController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("이메일 처리 중 오류가 발생했습니다.");
     }
+
+    // 인증코드 반환
+    @PostMapping("/code")
+    public String sendCode(){
+        String code = emailService.makeCode();
+        return code;
+    }
 }
